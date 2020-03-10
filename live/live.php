@@ -66,7 +66,7 @@ register_shutdown_function(function() {
 //2、配置文件加载测试
  //config::load('qwe');
 //  config::load('qwe',false);
- var_dump(config::getall());
+// var_dump(config::getall());
 var_dump(autoloader::getLoadedfiles());
 
 //路由测试
