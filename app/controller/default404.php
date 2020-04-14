@@ -9,7 +9,7 @@ class default404_controller{
    
     public static function index(){
 
-        echo '找不到页面啊   亲  ';
+        echo '这个是404';
     }
     
 

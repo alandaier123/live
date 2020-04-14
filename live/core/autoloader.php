@@ -1,5 +1,8 @@
 <?php
+/*
+1、目录名称变动需更改多处。
 
+*/
 class autoloader{
 
 	protected static $loadedfiles = array(__FILE__ => true);

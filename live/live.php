@@ -1,5 +1,12 @@
 <?php
 
+
+/*
+1、设置默认404页面在router
+2、更改核心目录名称在autoloader
+*/
+
+
 //框架入口所在路径
 defined('LIVE_PATH') OR define('LIVE_PATH',dirname(__FILE__));
 
@@ -13,7 +20,11 @@ defined('IS_SCRIPT') OR define('IS_SCRIPT', false);
 defined('IS_DEBUG')  OR define('IS_DEBUG', false);
 
 defined('DS')        OR define('DS', '/');
-defined('EXT')       OR define('EXT', '.php');    
+defined('EXT')       OR define('EXT', '.php'); 
+
+defined('DEFAULT_404')       OR define('DEFAULT_404', 'default404');   
+
+
 //脚本模式 暂无处理
 if(IS_SCRIPT){
     
@@ -67,7 +78,7 @@ register_shutdown_function(function() {
  //config::load('qwe');
 //  config::load('qwe',false);
 // var_dump(config::getall());
-var_dump(autoloader::getLoadedfiles());
+//var_dump(autoloader::getLoadedfiles());
 
 //路由测试
 router::auto();

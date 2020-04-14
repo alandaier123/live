@@ -3,7 +3,7 @@
 class debug{
 
 
-	//调试输出 借鉴自ong 
+	//调试输出  
 	public static function p() { 
 
         $args = func_get_args();
