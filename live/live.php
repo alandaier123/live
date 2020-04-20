@@ -22,8 +22,11 @@ defined('IS_DEBUG')  OR define('IS_DEBUG', false);
 defined('DS')        OR define('DS', '/');
 defined('EXT')       OR define('EXT', '.php'); 
 
-defined('DEFAULT_404')       OR define('DEFAULT_404', 'default404');   
+defined('DEFAULT_CTL_404')       OR define('DEFAULT_CTL_404', 'default404');   
+defined('DEFAULT_ACT_404')       OR define('DEFAULT_ACT_404', 'index'); 
 
+//核心目录
+const CORE_DIRNAME = 'core';
 
 //脚本模式 暂无处理
 if(IS_SCRIPT){
@@ -34,7 +37,7 @@ if(IS_SCRIPT){
 
 
 //引入自动加载类
-require_once LIVE_PATH.'/core/autoloader.php';
+require_once LIVE_PATH.'/'.CORE_DIRNAME.'/autoloader.php';
 
 spl_autoload_register(array('autoloader', 'loader'));
 
@@ -75,10 +78,10 @@ register_shutdown_function(function() {
 // test_v_model::asd();
 // lib_activity_dfsgd::asdf();
 //2、配置文件加载测试
- //config::load('qwe');
-//  config::load('qwe',false);
-// var_dump(config::getall());
-//var_dump(autoloader::getLoadedfiles());
+//  config::load('qwe');
+ // config::load('memcached',false);
+// debug::p(config::getall());
+// debug::p(autoloader::getLoadedfiles());
 
 //路由测试
 router::auto();

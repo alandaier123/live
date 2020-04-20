@@ -2,9 +2,9 @@
 
 class router{
 
-	/* URL结构示例：
-	 * /controller/action/param[0]/param[1]/.../?xxx=v....
-	 * /dir_name/controller/action/param[0]/param[1]/.../?xxx=v....
+	/* 
+	 * 不限制访问指定目录下文件及方法
+	 * 
 	*/
 
 	protected static $path_info = array();
@@ -17,8 +17,8 @@ class router{
 
 
 	//404 页面
-	protected static $default_controller_404 = DEFAULT_404;
-	protected static $default_action_404 = 'index';
+	protected static $default_controller_404 = DEFAULT_CTL_404;
+	protected static $default_action_404 = DEFAULT_ACT_404;
 
 	
 	protected static $default_action 	 = 'index';
@@ -31,18 +31,16 @@ class router{
 
 		if(self::parse_controller() && self::$controller) {
 			 
+			
 
 			controller::call(self::$controller, self::$action, self::$params);
 		} else {
+
 			if(self::$default_controller_404) {
-				//if(method_exists(DEFAULT_CONTROLLER_404, $action_name))
-				if(self::$default_action_404) {
-					self::$controller = self::$default_controller_404;
-					self::parse_action(-1);
-					return controller::call(self::$controller, self::$action, self::$params);
-				} 
-					self::parse_action(0);
-					return controller::call(self::$default_controller_404, self::$action, self::$params);
+				self::$controller = self::$default_controller_404;
+			
+				self::$action     = self::$default_action_404;
+				return controller::call(self::$controller, self::$action, self::$params);
 			}
 
 			
@@ -123,9 +121,7 @@ class router{
 			self::$action = self::$default_action;
 		} else {
 			self::$action = self::$path_info[$key + 1];
-			if(!method_exists(self::$controller.controller::controller_ext, self::$action)) {
-				self::$action = self::$default_action_404;
-			}
+			
 			self::$params = array_slice(self::$path_info, $key + 2);
 		}
 	}

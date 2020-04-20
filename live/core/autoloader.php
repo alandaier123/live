@@ -7,17 +7,13 @@ class autoloader{
 
 	protected static $loadedfiles = array(__FILE__ => true);
 
-	const ext 	= '.php';
-	const lib 	= 'lib';
-
-
+	//目录名
+	const lib 			= 'lib';
 	const controller 	= 'controller';
 	const model 		= 'model';
+	const config 		= 'config';
 
-
-	const config = 'config';
-
-
+	//const core_dir 		= 'core';
 
 	//类名规范
 	//1、类名格式：lib_+[<目录名>_[<目录名>_]]+<类名>
@@ -37,9 +33,10 @@ class autoloader{
 			case 'router':
 			case 'controller':
 			case 'model':
+			case 'response':
 			case 'view':
 			
-				return self::loadfile($class.EXT, LIVE_PATH.DS.'core');
+				return self::loadfile($class.EXT, LIVE_PATH.DS.CORE_DIRNAME);
 				break;
 		
 			default:
