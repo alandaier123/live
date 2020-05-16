@@ -21,8 +21,9 @@ class config{
 		if(empty(static::$config_files[$file_prefix.$filename[0]])) {
 			// autoloader::loadConfig()加载失败返回 false
 			static::$config_files[$file_prefix.$filename[0]] = autoloader::loadConfig($filename[0], $is_public);
-			return $filename[0];
-		} 
+			
+		}
+		return static::$config_files[$file_prefix.$filename[0]]; 
 	}
 
 	

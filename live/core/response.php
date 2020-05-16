@@ -69,16 +69,26 @@ class response {
         511 => 'Network Authentication Required',   // RFC-nottingham-http-new-status-04
     );
 	
-    /**
-     * 构造函数一下
-     * @param string  $content [description]
-     * @param integer $status  [description]
-     * @param array   $headers [description]
-     */
-	public function __construct($content = '', $status = 200, $headers = array())
+
+	public function __construct($status = 200)
     {
-        $this->setStatusCode($status);
+        $this->statusCode = $status;
+        $this->statusText = self::$statusTexts[$this->statusCode];    
     }
+
+
+
+    public static function error($errno = 404){
+        $res = new Response($errno);
+        $res->sendHeader();
+        
+    }
+
+    public function sendHeader(){
+        $str = sprintf('HTTP/%s %s %s', '1.0', $this->statusCode, $this->statusText);
+        header($str);
+    }
+
 
     /**
      * 返回或输出JSON或JSONP  有$_GET['callback']时返回jsonp
@@ -103,57 +113,23 @@ class response {
         }
     }
 
-    /**
-     * 设置状态码
-     * @param [type] $status [description]
-     */
-    public function setStatusCode($status){
-    	$this->statusCode = $status;
-    	$this->statusText = self::$statusTexts[$this->statusCode];
-    }
+
+
 	
-    /**
-     * 触发返回给浏览器错误
-     * @param  integer $errno 错误码 一般是HTTP状态码
-     * @param  string  $msg   错误信息
-     * @return null
-     */
-	public static function error($errno = 404, $msg = ''){
-		$res = new Response('',$errno);
-		$res->sendHeader();
-		switch ($errno) {
-			case '301':
-			case '302':
-				break;
-			case '404':
-				//TODO 404 view here...
-                // echo '404 Not Found.' . $msg;
-				break;
-			
-			default:
-				# code...
-				break;
-		}
-		
-	}
+
+
 
     /**
      * 重定向
      * @param string $url        重定向URL
      * @param string $statusCode HTTP重定向状态码，默认301  或302
      */
-	public static function Redirect($url, $statusCode = '301'){
+	public static function redirect($url, $statusCode = '301'){
 		$res = new Response($statusCode);
 		$res->sendHeader();
 		header("Location:{$url}");
 	}
 
-    /**
-     * header给浏览器头部信息
-     * @return null
-     */
-	public function sendHeader(){
-        $str = sprintf('HTTP/%s %s %s', '1.0', $this->statusCode, $this->statusText);//header('HTTP/1.1 404 Not Found');
-		header($str);
-	}
+
+
 }

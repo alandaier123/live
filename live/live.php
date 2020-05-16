@@ -67,7 +67,7 @@ register_shutdown_function(function() {
 //1、自动加载还差cfg、view
 
 //3、数据库文件加载
-//4、404 页面
+//
 //1、自动加载测试
 
 // test_v_lib::asd();
@@ -77,11 +77,20 @@ register_shutdown_function(function() {
 // v_model::asd();
 // test_v_model::asd();
 // lib_activity_dfsgd::asdf();
-//2、配置文件加载测试
+// //2、配置文件加载测试
 //  config::load('qwe');
- // config::load('memcached',false);
+//  config::load('memcached',false);
 // debug::p(config::getall());
 // debug::p(autoloader::getLoadedfiles());
 
 //路由测试
 router::auto();
+
+// $db = new db('srdb');
+/*$conn = $db->getconn();
+$dbconfig = $db->getconfig();
+debug::p($conn,$dbconfig);*/
+
+// $sql = 'select * from md_user order by uid';
+// $user = $db->query($sql);
+// debug::p($user);

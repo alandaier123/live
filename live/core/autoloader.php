@@ -11,6 +11,7 @@ class autoloader{
 	const lib 			= 'lib';
 	const controller 	= 'controller';
 	const model 		= 'model';
+	const view 			= 'view';
 	const config 		= 'config';
 
 	//const core_dir 		= 'core';
@@ -45,6 +46,35 @@ class autoloader{
 				break;
 		}
 
+	}
+
+	/**
+	 * 过滤异常路径
+	 * @param  string $path 要过滤的路径
+	 * @return string       过滤后的路径
+	 */
+	protected static function clean_path($path ) {
+		return str_replace('..', '', $path);
+	}
+
+	public static function viewload($path, $public_view = false){
+		if($public_view) {
+			$file = LIVE_PATH.DS.self::view.DS.self::clean_path($path).EXT;
+		} else {
+			$file = APP_PATH.DS.self::view.DS.self::clean_path($path).EXT;
+		}
+			
+		$file_path = $file;
+		while (!empty(self::$loadedfiles[$file_path])) {
+			$file_path = $file.'.'. ++$i;
+		}
+		if(file_exists($file)){
+			self::$loadedfiles[$file_path] = array(memory_get_usage(),memory_get_usage(true), microtime(true));
+			return $file;
+		} else {
+			self::$loadedfiles[$file_path] = false;
+			return false;
+		}
 	}
 	/**
 	 * 加载核心配置config,可通过getPathByInfo()支持多层目录

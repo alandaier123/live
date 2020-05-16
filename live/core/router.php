@@ -15,14 +15,6 @@ class router{
 	protected static $params = array();
 
 
-
-	//404 页面
-	protected static $default_controller_404 = DEFAULT_CTL_404;
-	protected static $default_action_404 = DEFAULT_ACT_404;
-
-	
-	protected static $default_action 	 = 'index';
-
 	public static function auto(){
 		/*1、保存url信息*/
 		self::parse_uri();
@@ -36,20 +28,22 @@ class router{
 			controller::call(self::$controller, self::$action, self::$params);
 		} else {
 
-			if(self::$default_controller_404) {
-				self::$controller = self::$default_controller_404;
-			
-				self::$action     = self::$default_action_404;
+			if(DEFAULT_CTL_404) {
+				self::default_404();
 				return controller::call(self::$controller, self::$action, self::$params);
 			}
 
 			
-			//Response::error('404', 'controller not found  :'. (self::$controller ?: self::$path_info[intval(CORE_PREFIX_PARAMS_NUM)]) );
+			response::error('404');
 		}
 
 	}
 	
+	protected static function default_404(){
+		self::$controller = DEFAULT_CTL_404;
 	
+		self::$action     = DEFAULT_ACT_404;
+	}
 /*
 *若存在目录同名controller文件，不能访问
 * @param $dir_num 控制器前缀目录不进入查找
@@ -60,8 +54,7 @@ class router{
 
 		if(empty(self::$path_info[$dir_num])) {
 			//debug::p(self::$path_info[$dir_num]);die;
-			self::$controller = self::$default_controller_404;
-			self::$action = self::$default_action_404;
+			self::default_404();
 		
 			return true;
 		} else {
@@ -118,7 +111,7 @@ class router{
 
 	protected static function parse_action($key){
 		if(empty(self::$path_info[$key + 1])) {
-			self::$action = self::$default_action;
+			self::$action = DEFAULT_ACT_404;
 		} else {
 			self::$action = self::$path_info[$key + 1];
 			
