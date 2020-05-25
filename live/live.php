@@ -86,11 +86,11 @@ register_shutdown_function(function() {
 //路由测试
 router::auto();
 
-// $db = new db('srdb');
-/*$conn = $db->getconn();
-$dbconfig = $db->getconfig();
-debug::p($conn,$dbconfig);*/
+// $db = new db('zhibo');
+// $conn = $db->getconn();
+// $dbconfig = $db->getconfig();
+// debug::p($conn,$dbconfig);
 
-// $sql = 'select * from md_user order by uid';
+// $sql = 'select * from zb_admin order by id';
 // $user = $db->query($sql);
 // debug::p($user);
